@@ -14,12 +14,6 @@
 @section('content')
     <div class="container-fluid py-4">
 
-        @if (Session::has('message'))
-            <br>
-            <div class="alert alert-{{ session('status') }} text-white">
-                {{ session('message') }}
-            </div>
-        @endif
         <div class="row">
             <div class="d-flex justify-content-end">
                 <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createData">
@@ -43,7 +37,7 @@
                                         <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                             TELEPON</th>
-                                            <th
+                                        <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                             DIVISI</th>
                                         <th class="text-secondary opacity-7">Action</th>
@@ -76,11 +70,12 @@
 
                                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                                     data-bs-target="#updateData" data-id="{{ $item->id }}"
-                                                    data-name="{{ $item->name }}" data-jenis_kelamin="{{ $item->jenis_kelamin }}"
+                                                    data-name="{{ $item->name }}"
+                                                    data-jenis_kelamin="{{ $item->jenis_kelamin }}"
                                                     data-phone="{{ $item->phone }}" data-divisi="{{ $item->divisi }}"
                                                     data-email="{{ $item->email }}" data-alamat="{{ $item->alamat }}"
-                                                    data-thumb="{{ $item->thumb }}"   data-password="{{ $item->password }}"
-
+                                                    data-thumb="{{ $item->thumb }}"
+                                                    data-password="{{ $item->password }}"
                                                     data-url="{{ route('admin.datakaryawan.update', ['id' => $item->id]) }}">
                                                     Update
                                                 </button>
@@ -139,11 +134,13 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="npp" class="form-label">npp</label>
-                            <input type="text" class="form-control" id="npp" name="npp" placeholder="isi npp">
+                            <input type="text" class="form-control" id="npp" name="npp"
+                                placeholder="isi npp">
                         </div>
                         <div class="mb-3">
                             <label for="name" class="form-label">name</label>
-                            <input type="text" class="form-control" id="name" name="name" placeholder="isi name">
+                            <input type="text" class="form-control" id="name" name="name"
+                                placeholder="isi name">
                         </div>
                         <div class="mb-3">
                             <label for="Jenis Kelamin" class="form-label">Jenis Kelamin</label>
@@ -156,12 +153,14 @@
 
                         <div class="mb-3">
                             <label for="phone" class="form-label">phone</label>
-                            <input type="text" class="form-control" id="phone" name="phone" placeholder="isi phone">
+                            <input type="text" class="form-control" id="phone" name="phone"
+                                placeholder="isi phone">
                         </div>
 
                         <div class="mb-3">
                             <label for="divisi" class="form-label">divisi</label>
-                            <input type="text" class="form-control" id="divisi" name="divisi" placeholder="isi divisi">
+                            <input type="text" class="form-control" id="divisi" name="divisi"
+                                placeholder="isi divisi">
                         </div>
 
                         <div class="mb-3">
@@ -171,15 +170,18 @@
 
                         <div class="mb-3">
                             <label for="Thumb" class="form-label">Thumb</label>
-                            <input type="file" class="form-control" id="thumb" name="thumb" placeholder="isi thumb">
+                            <input type="file" class="form-control" id="thumb" name="thumb"
+                                placeholder="isi thumb">
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">email</label>
-                            <input type="text" class="form-control" id="email" name="email" placeholder="isi email">
+                            <input type="text" class="form-control" id="email" name="email"
+                                placeholder="isi email">
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">password</label>
-                            <input type="password" class="form-control" id="password" name="password" placeholder="isi password">
+                            <input type="password" class="form-control" id="password" name="password"
+                                placeholder="isi password">
                         </div>
 
                     </div>
@@ -225,7 +227,7 @@
                         <div class="mb-3">
                             <label for="Jenis Kelamin" class="form-label">Jenis Kelamin</label>
                             <select name="jenis_kelamin" id="" class="form-control">
-                                <option value="">Pilih Jenis Kelamin</option>
+                                <option value="${$(e.relatedTarget).data('jenis_kelamin')}" selected>${$(e.relatedTarget).data('jenis_kelamin')}</option>
                                 <option value="Laki Laki">Laki Laki</option>
                                 <option value="Perempuan">Perempuan</option>
                             </select>
@@ -271,6 +273,5 @@
             $('.dropify').dropify();
 
         });
-
     </script>
 @endsection

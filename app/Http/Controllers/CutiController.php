@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\{
     Mail,
     Response
 };
+use PDF;
 
 class CutiController extends Controller
 {
@@ -53,123 +54,30 @@ class CutiController extends Controller
         DB::table('cuti')->where('id',$id)->update([
             'status' => 1
         ]);
-        return redirect()->back()->with(['status' => 'success','message'=>'Berhasil Di Approve']);
+        return redirect()->back()->with(['status' => 'success','message'=>'Cuti Berhasil Di Approve']);
     }
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+
+    public function decline(Request $request,$id)
     {
-        // $this->validate($request, [
-        //     'nama' => 'required',
-        //     'formulir' => 'required',
-        // ]);
-
-
-        if ($request->hasFile('thumb')) {
-            $file = $request->file('thumb');
-            $thumbname = time() . '-' . $file->getClientOriginalName();
-            $file->move(public_path() . '/thumb' . '/', $thumbname);
-            DB::table('users')->insert([
-                'npp' => $request->npp,
-                'name' => $request->name,
-                'jenis_kelamin' => $request->jenis_kelamin,
-                'phone' => $request->phone,
-                'divisi' => $request->divisi,
-                'alamat' => $request->alamat,
-                'thumb' => $request->thumb,
-                'status' => 1,
-                'role' => 1,
-                'email' => $request->email,
-                'password' => $request->password,
-                'thumb' => $thumbname,
-            ]);
-        }else {
-            DB::table('users')->insert([
-                'npp' => $request->npp,
-                'name' => $request->name,
-                'jenis_kelamin' => $request->jenis_kelamin,
-                'phone' => $request->phone,
-                'divisi' => $request->divisi,
-                'alamat' => $request->alamat,
-                'thumb' => $request->thumb,
-                'status' => 1,
-                'role' => 1,
-                'email' => $request->email,
-                'password' => $request->password,
-            ]);
-        }
-
-
-
-
-
-        return redirect()->back()->with(['message'=>'Data Karyawan berhasil ditambahkan','status'=>'success']);
+        DB::table('cuti')->where('id',$id)->update([
+            'status' => -1,
+            'keterangan_reject'=>$request->keterangan_reject
+        ]);
+        return redirect()->back()->with(['status' => 'success','message'=>'Cuti Berhasil Di Decline']);
     }
 
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Data Karyawan  $plant
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function cetakPdf($id)
     {
-
-
-        if ($request->hasFile('thumb')) {
-            $file = $request->file('thumb');
-            $thumbname = time() . '-' . $file->getClientOriginalName();
-            $file->move(public_path() . '/thumb' . '/', $thumbname);
-            DB::table('users')->where('id',$id)->update([
-                'name' => $request->name,
-                'jenis_kelamin' => $request->jenis_kelamin,
-                'phone' => $request->phone,
-                'divisi' => $request->divisi,
-                'alamat' => $request->alamat,
-                'thumb' => $request->thumb,
-                'status' => 1,
-                'role' => 1,
-                'email' => $request->email,
-                'password' => $request->password,
-                'thumb' => $thumbname,
-            ]);
-        }else {
-            DB::table('users')->where('id',$id)->update([
-                'name' => $request->name,
-                'jenis_kelamin' => $request->jenis_kelamin,
-                'phone' => $request->phone,
-                'divisi' => $request->divisi,
-                'alamat' => $request->alamat,
-                'thumb' => $request->thumb,
-                'status' => 1,
-                'role' => 1,
-                'email' => $request->email,
-                'password' => $request->password,
-
-            ]);
-        }
-
-
-
-        return redirect()->back()->with(['message'=>'Data Karyawan berhasil di update','status'=>'success']);
+        $pdf = PDF::loadview('cuti-pdf',['data'=>DB::table('cuti')->get()]);
+        return $pdf->stream();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Data Karyawan  $plant
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function laporan(Request $request)
     {
-
-        DB::table('users')->where('id',$id)->delete();
-        return redirect()->route('admin.datakaryawan.index')->with(['message'=>'Data Karyawan berhasil di delete','status'=>'success']);
+        return view('admin.laporan-cuti');
     }
+
+
+
 }

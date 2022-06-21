@@ -33,12 +33,6 @@ class DataKaryawanController extends Controller
      */
     public function store(Request $request)
     {
-        // $this->validate($request, [
-        //     'nama' => 'required',
-        //     'formulir' => 'required',
-        // ]);
-
-
         if ($request->hasFile('thumb')) {
             $file = $request->file('thumb');
             $thumbname = time() . '-' . $file->getClientOriginalName();
