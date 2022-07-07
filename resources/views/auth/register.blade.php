@@ -148,13 +148,18 @@
     <main class="form-signin">
         <form method="POST" action="{{ route('register') }}">
             @csrf
-            <img class="mb-4" src="https://www.clipartmax.com/png/middle/247-2476688_lambang-kota-bogor-png.png" alt="" width="72" height="57">
+            <img class="mb-4" src="https://www.clipartmax.com/png/middle/247-2476688_lambang-kota-bogor-png.png"
+                alt="" width="72" height="57">
             <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
 
             <div class="form-floating">
-                <input type="text" name="name" class="form-control" id="floatingInput"
-                    placeholder="name">
+                <input type="text" name="npp" class="form-control" id="floatingInput" placeholder="npp">
+                <label for="floatingInput">NPP</label>
+            </div>
+
+            <div class="form-floating">
+                <input type="text" name="name" class="form-control" id="floatingInput" placeholder="name">
                 <label for="floatingInput">Name</label>
             </div>
             <div class="form-floating">
