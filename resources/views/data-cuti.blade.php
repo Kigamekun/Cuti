@@ -84,7 +84,7 @@
                                             <td style="width: 20%">
                                                 @if ($item->status == -1)
                                                     <button class="btn btn-danger">Ditolak</button>
-                                                @elseif ($item->status == 1)
+                                                @elseif ($item->status == 0)
                                                     <button class="btn btn-info">Idle</button>
                                                 @else
                                                     <button class="btn btn-success">Diterima</button>
